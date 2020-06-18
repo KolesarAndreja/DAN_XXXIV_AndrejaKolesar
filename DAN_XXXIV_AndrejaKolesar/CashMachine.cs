@@ -11,7 +11,8 @@ namespace DAN_XXXIV_AndrejaKolesar
     {
         public int amount = 10000;
         private object locker = new object();
-
+        public int counterATM1 = 1;
+        public int counterATM2 = 1;
 
         public void ThreadsMaker(int a, int b)
         {
@@ -27,7 +28,6 @@ namespace DAN_XXXIV_AndrejaKolesar
                     {
                         Name = string.Format("Client_{0}_{1}", i + 1, 1)
                     };
-                    Console.WriteLine(threads[i].Name + " created");
                 }
                 else
                 {
@@ -35,7 +35,6 @@ namespace DAN_XXXIV_AndrejaKolesar
                     {
                         Name = string.Format("Client_{0}_{1}", (i + 1) - a, 2)
                     };
-                    Console.WriteLine(threads[i].Name + " created");
                 }
             }
 
@@ -49,25 +48,6 @@ namespace DAN_XXXIV_AndrejaKolesar
                 threads[i].Join();
             }
 
-            //int diff = Math.Abs(a - b);
-            //for(int i=0; i < diff; i ++)
-            //{
-            //    threads[i].Start();
-            //    threads[i + a].Start();
-            //}
-            //if (b > a)
-            //{
-            //    for(int i = a + diff; i < total; i++)
-            //    {
-            //        threads[i].Start();
-            //    }
-            //}
-            //if(a > b)
-            //{
-            //    for(int i = total-b-diff; i <)
-            //}
-
-
         }
         public void Transaction(int money)
         {
@@ -76,18 +56,41 @@ namespace DAN_XXXIV_AndrejaKolesar
             string client = arr[1];
             string cashMachine = arr[2];
 
+            if(cashMachine == "1")
+            {
+                while (Convert.ToInt32(client) > counterATM1)
+                {
+                    Thread.Sleep(0);
+                }
+            }
+
+            if(cashMachine == "2")
+            {
+                while(Convert.ToInt32(client) > counterATM2)
+                {
+                    Thread.Sleep(0);
+                }
+            }
+
             lock (locker)
             {
                 if (money > amount)
                 {
-                    Console.WriteLine("The client {0} failed to withdraw {1}rsd on cash machine no.{2}.", client, money, cashMachine);
+                    Console.WriteLine("The client {0} failed to withdraw {1}rsd on ATM {2}.", client, money, cashMachine);
                 }
                 else
                 {
                     amount -= money;
-                    Console.WriteLine("The client {0} has successfully withdraw {1}rsd on cash machine no.{2}. Remaining amount of money: {3} ", client, money, cashMachine, amount);
-                   
-                
+                    Console.WriteLine("The client {0} has successfully withdraw {1}rsd on ATM {2}. Remaining amount of money is {3}rsd.", client, money, cashMachine, amount);
+                }
+
+                if(cashMachine == "1")
+                {
+                    counterATM1++;
+                }
+                if (cashMachine == "2")
+                {
+                    counterATM2++;
                 }
             }
 
