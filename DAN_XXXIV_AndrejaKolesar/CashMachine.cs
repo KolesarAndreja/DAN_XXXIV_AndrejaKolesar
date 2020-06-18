@@ -20,22 +20,40 @@ namespace DAN_XXXIV_AndrejaKolesar
             Random random = new Random();
             for(int i = 0; i < total; i++)
             {
-                
                 if (i < a)
                 {
-                    threads[i] = new Thread(()=>Transaction(random.Next(100, 10001), i+1, 1));
+                    threads[i] = new Thread(() => Transaction(random.Next(100, 10001)))
+                    {
+                        Name = string.Format("Client_{0}_{1}", i + 1, 1)
+                    };
+                    Console.WriteLine(threads[i].Name + " created");
                 }
                 else
                 {
-                    threads[i] = new Thread(() => Transaction(random.Next(100, 10001), i, 2));
+                    threads[i] = new Thread(() => Transaction(random.Next(100, 10001)))
+                    {
+                        Name = string.Format("Client_{0}_{1}", (i + 1) - a, 2)
+                    };
+                    Console.WriteLine(threads[i].Name + " created");
                 }
-
             }
+            ThreadsStarter(threads);
+        }
+
+        public void ThreadsStarter(Thread[] t)
+        {
+            
 
         }
 
-        public void Transaction(int money, int client, int cashMachine)
+
+        public void Transaction(int money)
         {
+            var current = Thread.CurrentThread.Name;
+            string[] arr = current.Split('_');
+            string client = arr[1];
+            string cashMachine = arr[2];
+
             lock (locker)
             {
                 if (money > amount)
