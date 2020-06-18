@@ -20,9 +20,10 @@ namespace DAN_XXXIV_AndrejaKolesar
             Random random = new Random();
             for(int i = 0; i < total; i++)
             {
+                int r = random.Next(100, 10001);
                 if (i < a)
                 {
-                    threads[i] = new Thread(() => Transaction(random.Next(100, 10001)))
+                    threads[i] = new Thread(() => Transaction(r))
                     {
                         Name = string.Format("Client_{0}_{1}", i + 1, 1)
                     };
@@ -30,23 +31,44 @@ namespace DAN_XXXIV_AndrejaKolesar
                 }
                 else
                 {
-                    threads[i] = new Thread(() => Transaction(random.Next(100, 10001)))
+                    threads[i] = new Thread(() => Transaction(r))
                     {
                         Name = string.Format("Client_{0}_{1}", (i + 1) - a, 2)
                     };
                     Console.WriteLine(threads[i].Name + " created");
                 }
             }
-            ThreadsStarter(threads);
+
+            for(int i=0; i < total; i++)
+            {
+                threads[i].Start();
+            }
+
+            for (int i = 0; i < total; i++)
+            {
+                threads[i].Join();
+            }
+
+            //int diff = Math.Abs(a - b);
+            //for(int i=0; i < diff; i ++)
+            //{
+            //    threads[i].Start();
+            //    threads[i + a].Start();
+            //}
+            //if (b > a)
+            //{
+            //    for(int i = a + diff; i < total; i++)
+            //    {
+            //        threads[i].Start();
+            //    }
+            //}
+            //if(a > b)
+            //{
+            //    for(int i = total-b-diff; i <)
+            //}
+
+
         }
-
-        public void ThreadsStarter(Thread[] t)
-        {
-            
-
-        }
-
-
         public void Transaction(int money)
         {
             var current = Thread.CurrentThread.Name;
@@ -62,9 +84,10 @@ namespace DAN_XXXIV_AndrejaKolesar
                 }
                 else
                 {
-                    Console.WriteLine("The client {0} has successfully withdraw {1}rsd on cash machine no.{2}.", client, money, cashMachine);
                     amount -= money;
-                    Console.WriteLine("Remaining amount of money: " + amount);
+                    Console.WriteLine("The client {0} has successfully withdraw {1}rsd on cash machine no.{2}. Remaining amount of money: {3} ", client, money, cashMachine, amount);
+                   
+                
                 }
             }
 
