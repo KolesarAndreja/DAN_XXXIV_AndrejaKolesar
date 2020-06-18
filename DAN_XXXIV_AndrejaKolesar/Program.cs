@@ -7,15 +7,21 @@ using System.Threading.Tasks;
 
 namespace DAN_XXXIV_AndrejaKolesar
 {
+
+
     class Program
     {
         public static void AppMethod()
         {
-            Console.Write("Enter number of persons for first cash machine");
+            Console.Write("Enter number of persons for first cash machine:");
             int a = Validation.ValidPositiveNumber();
 
-            Console.Write("Enter number of persons for second cash machine");
+            Console.Write("Enter number of persons for second cash machine:");
             int b = Validation.ValidPositiveNumber();
+
+            CashMachine cashMachine = new CashMachine();
+            cashMachine.ThreadsMaker(a, b);
+
 
             Console.WriteLine();
         }
@@ -29,13 +35,13 @@ namespace DAN_XXXIV_AndrejaKolesar
                 switch (s)
                 {
                     case "1":
-                        Console.Write("1.Enter application \n2.Exit application \nYour choice: ");
                         AppMethod();
+                        Console.Write("1.Enter application \n2.Exit application \nYour choice: ");
                         break;
                     case "2":
                         break;
                     default:
-                        Console.Write("Invalid input. Try again:");
+                        Console.Write("Invalid input. Try again: ");
                         break;
                 }
             } while (s!="2");
