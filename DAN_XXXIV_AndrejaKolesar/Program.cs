@@ -7,24 +7,28 @@ using System.Threading.Tasks;
 
 namespace DAN_XXXIV_AndrejaKolesar
 {
-
-
     class Program
     {
+        /// <summary>
+        /// Ask user for number of clients of ATM1 and ATM2
+        /// </summary>
         public static void AppMethod()
         {
-            Console.Write("Enter number of persons for first cash machine:");
+            Console.Write("Enter number of persons for ATM1:");
             int a = Validation.ValidPositiveNumber();
 
-            Console.Write("Enter number of persons for second cash machine:");
+            Console.Write("Enter number of persons for ATM2:");
             int b = Validation.ValidPositiveNumber();
 
             CashMachine cashMachine = new CashMachine();
             cashMachine.ThreadsMaker(a, b);
-
-
             Console.WriteLine();
         }
+
+        /// <summary>
+        /// Main containts menu for application
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             string s = "";

@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace DAN_XXXIV_AndrejaKolesar
 {
+    /// <summary>
+    /// class for all validation in an application
+    /// </summary>
     class Validation
     {
+
+        /// <summary>
+        /// Return valid positive number
+        /// </summary>
         public static int ValidPositiveNumber()
         {
             string s = Console.ReadLine();
